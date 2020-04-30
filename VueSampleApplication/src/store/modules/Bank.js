@@ -29,10 +29,10 @@ const actions = {
       })
   },
 
-  transactions ({commit}, accountNumber) {
+  transactions ({commit}, accountId) {
     return Vue.resource(ENDPOINT_TRANSACTIONS)
       .get({
-        accountNumber,
+        accountId,
         index: 0,
         length: 10
       })
