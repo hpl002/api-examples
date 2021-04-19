@@ -6,7 +6,7 @@ var btoa = require('btoa');
 var credentials = require('./credentials');
 
 exports.getAccessToken = () => {
-    var identityServerUrl = "https://api.sbanken.no/identityserver/connect/token"; // access token endpoint
+    var identityServerUrl = "https://auth.sbanken.no/identityserver/connect/token"; // access token endpoint
     
     var clientId = credentials.clientid; // application key received from API Beta in the internetbank
     var secret = credentials.secret; // password received from API Beta in the internetbank
@@ -42,7 +42,7 @@ exports.getAccessToken = () => {
 }
 
 exports.getAccountDetails = (accessToken) => {
-    var accountServiceUrl = "https://api.sbanken.no/bank/api/v1/accounts/"+credentials.userid; //
+    var accountServiceUrl = "https://publicapi.sbanken.no/apibeta/api/v1/accounts/";
 
     // use accessToken to request accounts (the bearer token (accessToken) is put on the request header prior to sending the request)
 
@@ -66,7 +66,7 @@ exports.getAccountDetails = (accessToken) => {
 }
 
 exports.getAccountNumberDetails = (accountNumber, accessToken) => {
-    var accountNumberDetailsUrl = "https://api.sbanken.no/bank/api/v1/accounts/"+credentials.userid+"/"+accountNumber; //
+    var accountNumberDetailsUrl = "https://publicapi.sbanken.no/apibeta/api/v1/accounts/"+accountNumber; //
 
     // use accessToken to request accounts (the bearer token (accessToken) is put on the request header prior to sending the request)
 
@@ -91,7 +91,7 @@ exports.getAccountNumberDetails = (accountNumber, accessToken) => {
 
 
 exports.getAccountTransactions = (accountNumber, accessToken) => {
-    var requestUrl = "https://api.sbanken.no/bank/api/v1/transactions/"+credentials.userid+"/"+accountNumber; //
+    var requestUrl = "https://publicapi.sbanken.no/apibeta/api/v1/transactions/"+accountNumber; //
 
     // use accessToken to request accounts (the bearer token (accessToken) is put on the request header prior to sending the request)
 

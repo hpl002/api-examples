@@ -25,8 +25,17 @@ Python script which retrieves accessToken, customer and account information.
 ### [ShellScripts](./ShellScripts/)
 Shell script examples on how to retrieve accessToken and account information.
 
-
 ## Documentation 
+
+# Update April 2021
+
+* New domain name and endpoint: https://publicapi.sbanken.no/apibeta/
+* New Open API / swagger endpoint: https://publicapi.sbanken.no/openapi/apibeta/index.html
+* New API: Archived Transactions with transactionId (see OpenAPI /swagger endpoint)
+* CustomerId as a HTTP request header is not required and used anymore
+* New Authorization scope available in https://utvikler.sbanken.no (logged in at /Personal/ApiBeta/Info/)
+* Old authorization scopes will be removed in one month
+* In the event of unexpected failures, a ProblemDetails (RFC7807) response will be returned
 
 # Update September 2018
 
@@ -45,9 +54,9 @@ Shell script examples on how to retrieve accessToken and account information.
 The following links provides detailed description of the REST interfaces. This includes how to construct your requests and what response to expect.
 
 
-https://api.sbanken.no/Bank/swagger
+https://publicapi.sbanken.no/openapi/apibeta/index.html
 
-https://api.sbanken.no/Customers/swagger
+
 
 ### Authentication
 
@@ -114,6 +123,8 @@ If the request was successful, one should get the following response:
 ### How do I find the customerId / userId?
 
 This is your social security number. The same Id which is used when you log in with BankID.
+
+As of april 2021 you do not need to send this anymore.
 
 
 ## Availability
