@@ -11,7 +11,7 @@ exports.getAccessToken = () => {
     var clientId = credentials.clientid; // application key received from API Beta in the internetbank
     var secret = credentials.secret; // password received from API Beta in the internetbank
      
-    var basicAuth = btoa(clientId + ":" + secret); // create basicAuth header value according to Oauth 2.0 standard
+    var basicAuth = btoa(encodeURIComponent(clientId) + ":" + encodeURIComponent(secret)); // create basicAuth header value according to Oauth 2.0 standard
      
     var accessToken;
       
@@ -25,6 +25,7 @@ exports.getAccessToken = () => {
         .send('grant_type=client_credentials')
         .set('Authorization',  "Basic "+basicAuth)
         .set('Accept', 'application/json')
+        .set('customerId', credentials.userid)
         .end(function(err, res){
           if (err || !res.ok) {
             console.log(err);

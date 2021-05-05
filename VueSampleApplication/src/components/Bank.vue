@@ -6,7 +6,7 @@
       :key="i"
       md-expand
       :md-expanded.sync="expanded"
-      @click="fetchTransactions(item.accountNumber)"
+      @click="fetchTransactions(item.accountId)"
     )
       md-avatar.md-avatar-icon.md-accent {{ initials }}
       .md-list-item-text
@@ -44,11 +44,11 @@ export default {
     }
   },
   methods: {
-    fetchTransactions (accountNumber) {
+    fetchTransactions (accountId) {
       if (this.expanded)
         return
 
-      this.$store.dispatch('Bank/transactions', accountNumber)
+      this.$store.dispatch('Bank/transactions', accountId)
         .then(list => this.transactions = list.items)
     }
   }

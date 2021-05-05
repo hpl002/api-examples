@@ -22,6 +22,7 @@ class AccountList extends Component {
     var reqHeaders = new Headers();
     reqHeaders.append('Accept', 'application/json');
     reqHeaders.append('Authorization', 'Bearer '+ this.state.access_token);
+    reqHeaders.append('customerId', this.props.config.customerId)
 
     var initConfig = {
         method : 'GET',

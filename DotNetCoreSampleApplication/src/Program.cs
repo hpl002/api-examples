@@ -29,10 +29,10 @@ namespace SampleApplication
             var customerId = "*****************";
 
             /** Setup constants */
-            var discoveryEndpoint = "https://api.sbanken.no/identityserver";
+            var discoveryEndpoint = "https://auth.sbanken.no/identityserver";
             var apiBaseAddress = "https://api.sbanken.no";
-            var bankBasePath = "/bank";
-            var customersBasePath = "/customers";
+            var bankBasePath = "/exec.bank";
+            var customersBasePath = "/exec.customers";
 
             /**
              * Connect to Sbanken

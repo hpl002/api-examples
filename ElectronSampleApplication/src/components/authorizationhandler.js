@@ -4,8 +4,7 @@ import React, { Component } from 'react';
 export default function AuthorizationHandler(config, callback) {
 
 
-    var basicAuth = btoa(config.clientId + ":" + config.secret);
-
+    var basicAuth = btoa(encodeURIComponent(config.clientId) + ":" + encodeURIComponent(config.secret));
     var authRequest = new Request(config.identityServerUrl);
     var reqHeaders = new Headers();
     reqHeaders.append('Accept', 'application/json');
