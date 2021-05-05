@@ -25,17 +25,17 @@ Python script which retrieves accessToken, customer and account information.
 ### [ShellScripts](./ShellScripts/)
 Shell script examples on how to retrieve accessToken and account information.
 
-
 ## Documentation 
 
-# Update July 2019
-* Old scopes are deprecated. New scopes are available. Visit the API Beta self service pages in the Internet Bank to review the new scopes and activate any desired scopes.
+# Update May 2021
 
-# Update June 2019
-* Changed the example URLs to target /exec.bank instead of /bank
-
-# Update November 2018
-* Added documentation for [transactionTypes](./Documentation/) for the TransactionsAPI
+* New domain name and endpoint: https://publicapi.sbanken.no/apibeta/
+* New Open API / swagger endpoint: https://publicapi.sbanken.no/openapi/apibeta/index.html
+* New API: Archived Transactions with transactionId (see OpenAPI /swagger endpoint)
+* CustomerId as a HTTP request header is not required and used anymore
+* New Authorization scope available in https://utvikler.sbanken.no (logged in at /Personal/ApiBeta/Info/)
+* Old authorization scopes will be removed in one month
+* In the event of unexpected failures, a ProblemDetails (RFC7807) response will be returned
 
 # Update September 2018
 * Changed authentication endpoint from https://api.sbanken.no/identityserver to https://auth.sbanken.no/identityserver
@@ -53,9 +53,9 @@ Shell script examples on how to retrieve accessToken and account information.
 The following links provides detailed description of the REST interfaces. This includes how to construct your requests and what response to expect.
 
 
-https://api.sbanken.no/exec.bank/swagger
+https://publicapi.sbanken.no/openapi/apibeta/index.html
 
-https://api.sbanken.no/exec.customers/swagger
+
 
 ### Authentication
 
@@ -122,6 +122,8 @@ If the request was successful, one should get the following response:
 ### How do I find the customerId / userId?
 
 This is your social security number. The same Id which is used when you log in with BankID.
+
+As of april 2021 you do not need to send this anymore.
 
 
 ## Availability

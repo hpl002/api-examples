@@ -43,7 +43,7 @@ exports.getAccessToken = () => {
 }
 
 exports.getAccountDetails = (accessToken) => {
-    var accountServiceUrl = "https://api.sbanken.no/exec.bank/api/v1/accounts/"; //
+    var accountServiceUrl = "https://publicapi.sbanken.no/apibeta/api/v1/accounts/";
 
     // use accessToken to request accounts (the bearer token (accessToken) is put on the request header prior to sending the request)
 
@@ -52,7 +52,6 @@ exports.getAccountDetails = (accessToken) => {
         .get(accountServiceUrl)
         .set('Authorization',  "Bearer "+accessToken)
         .set('Accept', 'application/json')
-        .set('customerId', credentials.userid)
         .end(function(err, res){
           if (err || !res.ok) {
             console.log(err);
@@ -67,8 +66,8 @@ exports.getAccountDetails = (accessToken) => {
     return promise;
 }
 
-exports.getAccountNumberDetails = (accountId, accessToken) => {
-    var accountNumberDetailsUrl = "https://api.sbanken.no/exec.bank/api/v1/accounts/"+accountId; //
+exports.getAccountNumberDetails = (accountNumber, accessToken) => {
+    var accountNumberDetailsUrl = "https://publicapi.sbanken.no/apibeta/api/v1/accounts/"+accountNumber; //
 
     // use accessToken to request accounts (the bearer token (accessToken) is put on the request header prior to sending the request)
 
@@ -77,7 +76,6 @@ exports.getAccountNumberDetails = (accountId, accessToken) => {
         .get(accountNumberDetailsUrl)
         .set('Authorization',  "Bearer "+accessToken)
         .set('Accept', 'application/json')
-        .set('customerId', credentials.userid)
         .end(function(err, res){
           if (err || !res.ok) {
             console.log(err);
@@ -93,8 +91,8 @@ exports.getAccountNumberDetails = (accountId, accessToken) => {
 }
 
 
-exports.getAccountTransactions = (accountId, accessToken) => {
-    var requestUrl = "https://api.sbanken.no/exec.bank/api/v1/transactions/"+accountId; //
+exports.getAccountTransactions = (accountNumber, accessToken) => {
+    var requestUrl = "https://publicapi.sbanken.no/apibeta/api/v1/transactions/"+accountNumber; //
 
     // use accessToken to request accounts (the bearer token (accessToken) is put on the request header prior to sending the request)
 
@@ -103,7 +101,6 @@ exports.getAccountTransactions = (accountId, accessToken) => {
         .get(requestUrl)
         .set('Authorization',  "Bearer "+accessToken)
         .set('Accept', 'application/json')
-        .set('customerId', credentials.userid)
         .end(function(err, res){
           if (err || !res.ok) {
             console.log(err);
