@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Net.Http;
+using System.Text.Json;
 using System.Threading.Tasks;
 using IdentityModel.Client;
-using Newtonsoft.Json;
 
 namespace SampleApplication
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        private static async Task Main()
         {
-            RunAsync().Wait();
+            await RunAsync();
         }
 
         static async Task RunAsync()
@@ -21,43 +21,50 @@ namespace SampleApplication
 
             Here Oauth2 is being used with "client credentials": The "client" is the application, and we require a secret 
             known only to the application.
-
              */
 
-            var clientId = "******************************";
-            var secret = "******************************";
+            var clientId = "***************";
+            var secret = "****************";
 
-            /** Setup constants */
+            // Setup constants
             var discoveryEndpoint = "https://auth.sbanken.no/identityserver";
-            var apiBaseAddress = "https://publicapi.sbanken.no/apibeta";
+            var apiBaseAddress = "https://publicapi.sbanken.no/apibeta/";
 
-            /**
+            var myCreator = new TextWriterTraceListener(System.Console.Out);
+            Trace.Listeners.Add(myCreator);
+
+            /*
              * Connect to Sbanken
              *
              * Here the application connect to the identity server endpoint to retrieve a access token.
              */
 
+
+
             // First: get the OpenId configuration from Sbanken.
-            var discoClient = new DiscoveryClient(discoveryEndpoint);
+            var discoHttpClient = new HttpClient();
+            var discoveryDocumentResponse = await discoHttpClient.GetDiscoveryDocumentAsync(discoveryEndpoint);
 
-            var x = discoClient.Policy = new DiscoveryPolicy()
+
+            if (discoveryDocumentResponse.Error != null)
             {
-                ValidateIssuerName = false,
-            };
-
-            var discoResult = await discoClient.GetAsync();
-
-            if (discoResult.Error != null)
-            {
-                throw new Exception(discoResult.Error);
+                throw new Exception(discoveryDocumentResponse.Error);
             }
 
             // The application now knows how to talk to the token endpoint.
 
-            // Second: the application authenticates against the token endpoint
-            var tokenClient = new TokenClient(discoResult.TokenEndpoint, clientId, secret);
+            var tokenClient = new HttpClient();
 
-            var tokenResponse = tokenClient.RequestClientCredentialsAsync().Result;
+            // Second: the application authenticates against the token endpoint
+
+            var tokenRequest = new ClientCredentialsTokenRequest()
+            {
+                Address = discoveryDocumentResponse.TokenEndpoint,
+                ClientId = clientId,
+                ClientSecret = secret
+            };
+
+            var tokenResponse = await tokenClient.RequestClientCredentialsTokenAsync(tokenRequest);
 
             if (tokenResponse.IsError)
             {
@@ -76,24 +83,32 @@ namespace SampleApplication
             httpClient.SetBearerToken(tokenResponse.AccessToken);
 
             // The application retrieves the customer's information.
-            var customerResponse = await httpClient.GetAsync("/api/v1/Customers");
+            var customerResponse = await httpClient.GetAsync("api/v1/Customers");
             var customerResult = await customerResponse.Content.ReadAsStringAsync();
 
             Trace.WriteLine($"CustomerResult:{customerResult}");
 
             // The application retrieves the customer's accounts.
-            var accountResponse = await httpClient.GetAsync("/api/v1/Accounts");
+            var accountResponse = await httpClient.GetAsync("api/v1/Accounts");
+
             var accountResult = await accountResponse.Content.ReadAsStringAsync();
-            var accountsList = JsonConvert.DeserializeObject<AccountsList>(accountResult);
+
+            var serializeOptions = new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            };
+
+            var accountsList = JsonSerializer.Deserialize<AccountsList>(accountResult, serializeOptions);
 
             Trace.WriteLine($"AccountResult:{accountResult}");
 
-            var spesificAccountResponse = await httpClient.GetAsync("/api/v1/Accounts/{accountsList.Items[0].AccountId}");
-            var spesificAccountResult = await spesificAccountResponse.Content.ReadAsStringAsync();
+            if (accountsList != null)
+            {
+                var spesificAccountResponse = await httpClient.GetAsync($"api/v1/Accounts/{accountsList.Items[0].AccountId}");
+                var spesificAccountResult = await spesificAccountResponse.Content.ReadAsStringAsync();
 
-
-            Trace.WriteLine($"SpesificAccountResult:{spesificAccountResult}");
-
+                Trace.WriteLine($"SpesificAccountResult:{spesificAccountResult}");
+            }
         }
     }
 }
