@@ -27,7 +27,7 @@ Shell script examples on how to retrieve accessToken and account information.
 
 ## Documentation 
 
-# Update April 2021
+# Update May 2021
 
 * New domain name and endpoint: https://publicapi.sbanken.no/apibeta/
 * New Open API / swagger endpoint: https://publicapi.sbanken.no/openapi/apibeta/index.html
