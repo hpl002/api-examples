@@ -30,11 +30,11 @@ Shell script examples on how to retrieve accessToken and account information.
 # Update June 2021
 
 * New version of APIs (v2) at https://publicapi.sbanken.no/openapi/apibeta/index.html
-** Added new API for Sbanken Mailbox 
-* Removed old scopes (These are replaced by a single scope)* 
+    * Added new API for Sbanken Mailbox 
+* Removed old scopes (These are replaced by a single scope) 
 * Decomissioned the API endpoints at:
-** api.sbanken.no/exec.bank 
-** api.sbanken.no/exec.customers
+    * api.sbanken.no/exec.bank 
+    * api.sbanken.no/exec.customers
 
 
 # Update May 2021
