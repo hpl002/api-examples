@@ -18,8 +18,8 @@ export const CLIENT_SECRET           = ''
 
 /* You don't need to touch this */
 export const ENDPOINT_IDENTITYSERVER = 'https://auth.sbanken.no/identityserver/connect/token'
-export const ENDPOINT_API            = 'https://api.sbanken.no/'
-export const ENDPOINT_CUSTOMERS      = 'exec.customers/api/v1/customers'
-export const ENDPOINT_ACCOUNTS       = 'exec.bank/api/v1/accounts/{accountId}'
-export const ENDPOINT_TRANSACTIONS   = 'exec.bank/api/v1/transactions/{accountId}'
-export const ENDPOINT_TRANSFERS      = 'exec.bank/api/v1/transfers'
+export const ENDPOINT_API            = 'https://publicapi.sbanken.no/apibeta'
+export const ENDPOINT_CUSTOMERS      = '/api/v1/customers'
+export const ENDPOINT_ACCOUNTS       = '/api/v1/accounts/{accountId}'
+export const ENDPOINT_TRANSACTIONS   = '/api/v1/transactions/{accountId}'
+export const ENDPOINT_TRANSFERS      = '/api/v1/transfers'
