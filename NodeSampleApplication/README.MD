@@ -1,16 +1,20 @@
-# Setup guide
+# Sbanken proxy
 
-* Edit service/credentials.js and supply your client credentials + userid
-* npm install
-* npm run start
+**Bootstrapped using Express application generator**
+https://expressjs.com/en/starter/generator.html
 
+## Required environment values
+```
+    export CLIENT_ID="value"
+    export CLIENT_SECRET="value"
+    export PORT="3001"
 
-Then execute a REST HTTP GET operation to the following resources:
+```
 
-* Account details: http://localhost:3001/api/data
-* Account number details: http://localhost:3001/api/account/{accountNumber}
-* Account transactions: http://localhost:3001/api/transactions/{accountNumber}
+## Docs
+https://publicapi.sbanken.no/openapi/apibeta/index.html
 
-## Requirements
-
-* Node and NPM: https://www.npmjs.com/get-npm
+## Endpoints
+* GET Account details: /api/accounts
+* GET Account number details: /api/accounts/{accountNumber}
+* GET Account transactions: api/transactions/{accountNumber}

@@ -1,49 +1,36 @@
 var express = require('express');
 var router = express.Router();
 
-var service = require('../service/sbankenapi');
+var service = require('../service/index');
 
-router.get('/api/data', function(req, res, next) {
-  service.getAccessToken().then(data => {
-    console.log('Key: ', data);
-    service.getAccountDetails(data.access_token).then(accountData => {
-      console.log('Account data: ', accountData);
-      res.json(accountData);
-    }, error => {
-      res.json({});
-    });
-  }, error => {
-    res.json({});
-  });
+// Get all accounts
+router.get('/accounts', async (req, res, next) => {
+  try {
+    const { data } = await service.getAccounts()
+    res.send(data)
+  } catch (error) {
+    next(error)
+  }
 });
 
-
-router.get('/api/account/:id', function(req, res, next) {
-  service.getAccessToken().then(data => {
-    console.log('Key: ', data);
-    service.getAccountNumberDetails( req.params.id, data.access_token).then(accountDetails => {
-      console.log('Account Details: ', accountDetails);
-      res.json(accountDetails);
-    }, error => {
-      res.json({});
-    });
-  }, error => {
-    res.json({});
-  });
+// Get account details
+router.get('/accounts/:id', async (req, res, next) => {
+  try {
+    const { data } = await service.getAccountNumberDetails(req.params.id)
+    res.send(data)
+  } catch (error) {
+    next(error)
+  }
 });
 
-router.get('/api/transactions/:id', function(req, res, next) {
-  service.getAccessToken().then(data => {
-    console.log('Key: ', data);
-    service.getAccountTransactions( req.params.id, data.access_token).then(transactions => {
-      console.log('Account Transactions: ', transactions);
-      res.json(transactions);
-    }, error => {
-      res.json({});
-    });
-  }, error => {
-    res.json({});
-  });
+// Get transaction details
+router.get('/transactions/:id', async (req, res, next) => {
+  try {
+    const { data } = await service.getAccountTransactions(req.params.id)
+    res.send(data)
+  } catch (error) {
+    next(error)
+  }
 });
 
 
